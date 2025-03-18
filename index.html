@@ -1,0 +1,171 @@
+<!doctype html>
+<html>
+<head>
+	<title>Dashboard Test</title>
+	<style type="text/css">
+		:root {
+			font-family: "helvetica neue", sans-serif;
+		}
+
+		body {
+			padding: 2rem;
+			background-color: #fefefe;
+		}
+
+		.widget {
+			border: 1px solid #eaeaea;
+			background-color: #fff;
+			box-shadow: 0px 4px 8px rgba(0,0,0,0.05);
+			border-radius: 4px;
+			font-size: 0.875rem;
+			border: 1px solid black;
+			overflow: hidden;
+		}
+
+		.widget-header {
+			background-color: #fafafa;
+			padding: 0.25rem 0.5rem;
+			border-bottom: 1px solid black;
+		}
+
+		.widget-body {
+			padding: 0.5rem;
+		}
+
+
+		.dashboard-widgets {
+			--dashboard-grid-unit: 16rem;
+			display: grid;
+			grid-template-columns: repeat(auto-fill, minmax(var(--dashboard-grid-unit), 1fr));
+			grid-auto-rows: var(--dashboard-grid-unit);
+			grid-auto-flow: dense;
+			gap: 1rem;
+			padding: 2rem 0;
+			overflow-x: auto;
+		}
+
+		.widget {
+			min-width: var(--dashboard-grid-unit);
+		}
+
+		.widget.l {
+			grid-column: span 3;
+			/* This might be problematic*/
+			min-width: calc(var(--dashboard-grid-unit) * 3); 
+		}
+
+		.dashboard-heading {
+			border-bottom: 1px solid black;
+		}
+
+		.widget.m {
+			grid-column: span 2;
+			/* This might be problematic*/
+			min-width: calc(var(--dashboard-grid-unit) * 2);
+		}
+
+		.widget.s {
+			/* This might be problematic*/
+			grid-column: span 1;
+			min-width: var(--dashboard-grid-unit);
+		}
+
+	</style>
+</head>
+<body>
+
+	<main></main>
+
+	<script type="text/javascript">
+
+		const dashboardData = [
+			{
+				"title": "Section 1",
+				"widgets": [
+					{
+						"width": 'l',
+						"widgetType": "WIDGET_TYPE",
+						"title": 'Large Widget',
+						"data": "Hello I am data"
+					},
+					{
+						"width": 's',
+						"widgetType": "WIDGET_TYPE",
+						"title": 'Small Widget',
+						"data": "Hello I am data"
+					},
+					{
+						"width": 'm',
+						"widgetType": "WIDGET_TYPE",
+						"title": 'Medium Widget',
+						"data": "Hello I am data"
+					},					{
+						"width": 's',
+						"widgetType": "WIDGET_TYPE",
+						"title": 'Small Widget',
+						"data": "Hello I am data"
+					},
+				]
+			},
+			{
+				"title": "Section 2",
+				"widgets": [
+					{
+						"width": 'l',
+						"widgetType": "WIDGET_TYPE",
+						"title": 'Large Widget',
+						"data": "Hello I am data"
+					},
+					{
+						"width": 's',
+						"widgetType": "WIDGET_TYPE",
+						"title": 'Small Widget 1',
+						"data": "Hello I am data"
+					},
+					{
+						"width": 'm',
+						"widgetType": "WIDGET_TYPE",
+						"title": 'Medium Widget 2',
+						"data": "Hello I am data"
+					},
+				]
+			},
+		]
+
+		const main = document.querySelector('main');
+
+		dashboardData.forEach((dashboardSection) => {
+			const dashboardSectionFrag = document.createDocumentFragment();
+
+			const sectionHeading = document.createElement('div');
+			sectionHeading.innerHTML = `<h3>${dashboardSection.title}</h3>`;
+			sectionHeading.classList.add('dashboard-heading');
+			
+			const widgetsContainer = document.createElement('div');
+			widgetsContainer.classList.add('dashboard-widgets');
+
+			dashboardSection.widgets.forEach((widget) => {
+				const widgetEl = document.createElement('div');
+				widgetEl.classList.add('widget', widget.width);
+				widgetsContainer.appendChild(widgetEl);
+				const widgetHeaderEl = document.createElement('div');
+				widgetHeaderEl.classList.add("widget-header");
+				widgetHeaderEl.innerText = widget.title;
+				const widgetBodyEl = document.createElement('div');
+				widgetBodyEl.classList.add("widget-body");
+				widgetBodyEl.innerHTML = widget.data;
+
+				widgetEl.appendChild(widgetHeaderEl);
+				widgetEl.appendChild(widgetBodyEl);
+
+			})
+
+			dashboardSectionFrag.appendChild(sectionHeading);
+			dashboardSectionFrag.appendChild(widgetsContainer);			
+			main.appendChild(dashboardSectionFrag);
+		})
+
+	</script>
+
+</body>
+</html>
